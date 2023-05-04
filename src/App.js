@@ -1,24 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState,  } from 'react';
+
+
 
 function App() {
+  const [data, setData] = useState();
+
+
+    const fetchData = async(category) => {
+      const response = await fetch(`https://excuser-three.vercel.app/v1/excuse/${category}`)
+      const json = await response.json()
+      setData(json)
+    };
+    console.log(data)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>Generate an excuse for </h1>
+      <button onClick={() => fetchData('party')} > Party </button>     
+      <button onClick={() => fetchData('office')}   > Office </button>     
+      <button onClick={() => fetchData('funny')}   > Fun </button>     
+      <button onClick={() => fetchData('unbelievable')}  > Unbelievable </button>     
+      <button onClick={() => fetchData('developers')}  > Developers </button>     
+      <h3>{data[0].excuse} </h3>
+
+    </>
   );
 }
 
